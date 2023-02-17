@@ -57,6 +57,7 @@ class Level extends Phaser.Scene{
     
     this.Text.visible = false;
     this.player.alpha = 0.3;
+    this.player.body.enable = false;
 
     this.warmhole.alpha = 1;
     var tween = this.tweens.add({
@@ -67,6 +68,7 @@ class Level extends Phaser.Scene{
       repeat:0,
       onComplete: function(){
         this.player.alpha = 1;
+        this.player.body.enable = true;
 
         var tween2 = this.tweens.add({
           targets: this.warmhole,
@@ -80,9 +82,8 @@ class Level extends Phaser.Scene{
           }
         })
       },
-      callbackScope: this
+      callbackScope: this,
     });
-
   }
 
   update(){

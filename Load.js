@@ -57,12 +57,12 @@ class Load extends Phaser.Scene{
             progressBar.fillRect(490, 270, 300 * value, 30);
         });
         
-        /*this.load.on('complete', function () {
+        this.load.on('complete', function () {
             progressBar.destroy();
             progressBox.destroy();
             loadingText.destroy();
             percentText.destroy();
-        });*/
+        });
         
         this.load.image('logo', 'Assets/Logo.png');
     }
@@ -104,12 +104,22 @@ class Load extends Phaser.Scene{
         });
 
 
-        //this.logo = this.add.image(1280/2, 720/2, 'logo').setScale(0.25);
+        this.logo = this.add.image(1280/2, 720/2, 'logo').setScale(0.25);
+
+        var loadingText = this.make.text({
+            x: 1280 / 2 - 100,
+            y: 720 / 2 + 200,
+            text: 'Loading...',
+            style: {
+                font: '40px monospace',
+                fill: '#ffffff'
+            }
+        });
     }
 
-    /*update(time){
+    update(time){
        if(time > 5000){
-        this.scene.switch("Level");
+            this.scene.switch("Level");
         }
-    }*/
+    }
 }
