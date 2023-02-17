@@ -82,9 +82,6 @@ class Load extends Phaser.Scene{
         });
         
         this.load.image('logo', 'Assets/Logo.png');
-        for (var i = 0; i < 5000; i++) {
-            this.load.image('logo', 'Assets/Logo.png');
-        }
     }
 
     create(){
@@ -124,10 +121,12 @@ class Load extends Phaser.Scene{
         });
 
 
-        this.logo = this.add.image(400, 300, 'logo');
+        this.logo = this.add.image(1280/2, 720/2, 'logo').setScale(0.25);
     }
 
-    update(){
-        this.scene.switch('Level10');
+    update(time){
+       if(time > 3000){
+        this.scene.switch("Level");
+        }
     }
 }
