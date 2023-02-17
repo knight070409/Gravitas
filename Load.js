@@ -26,13 +26,11 @@ class Load extends Phaser.Scene{
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240, 270, 320, 50);
+        progressBox.fillRect(480, 260, 320, 50);
         
-        //var width = this.cameras.main.width;
-        //var height = this.cameras.main.height;
         var loadingText = this.make.text({
             x: 1280 / 2,
-            y: 720 / 2 - 50,
+            y: 720 / 2 + 100,
             text: 'Loading...',
             style: {
                 font: '20px monospace',
@@ -43,7 +41,7 @@ class Load extends Phaser.Scene{
         
         var percentText = this.make.text({
             x: 1280 / 2,
-            y: 720 / 2 - 5,
+            y: 720 / 2 ,
             text: '0%',
             style: {
                 font: '18px monospace',
@@ -52,34 +50,19 @@ class Load extends Phaser.Scene{
         });
         percentText.setOrigin(0.5, 0.5);
         
-        var assetText = this.make.text({
-            x: 1280 / 2,
-            y: 720 / 2 + 50,
-            text: '',
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        });
-        assetText.setOrigin(0.5, 0.5);
-        
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250, 280, 300 * value, 30);
+            progressBar.fillRect(490, 270, 300 * value, 30);
         });
         
-        this.load.on('fileprogress', function (file) {
-            assetText.setText('Loading asset: ' + file.key);
-        });
-        this.load.on('complete', function () {
+        /*this.load.on('complete', function () {
             progressBar.destroy();
             progressBox.destroy();
             loadingText.destroy();
             percentText.destroy();
-            assetText.destroy();
-        });
+        });*/
         
         this.load.image('logo', 'Assets/Logo.png');
     }
@@ -121,12 +104,12 @@ class Load extends Phaser.Scene{
         });
 
 
-        this.logo = this.add.image(1280/2, 720/2, 'logo').setScale(0.25);
+        //this.logo = this.add.image(1280/2, 720/2, 'logo').setScale(0.25);
     }
 
-    update(time){
-       if(time > 3000){
+    /*update(time){
+       if(time > 5000){
         this.scene.switch("Level");
         }
-    }
+    }*/
 }
