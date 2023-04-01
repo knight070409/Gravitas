@@ -1,11 +1,15 @@
-class Level extends Phaser.Scene{
+class Level1 extends Phaser.Scene{
   constructor(){
-    super('Level')
+    super('Level1')
   }
 
   create(){
+
+    lvl=0;
+
     this.gravity="y";
     this.dir=0;
+    
     this.background = this.add.tileSprite(0, 0, config.width, config.height, 'background').setInteractive();
     this.background.setOrigin(0,0);
 
@@ -35,27 +39,10 @@ class Level extends Phaser.Scene{
     this.warmhole2 = this.physics.add.sprite(1210, 370, 'warmhole').setScale(0.25);
 
     this.enemies = this.physics.add.group();
-    this.enemies.create(900, 80, 'enemy').setScale(0.5);
-    this.enemies.create(950, 290, 'enemy').setScale(0.5);
-    this.enemies.create(810, 430, 'enemy').setScale(0.5).flipY = true;
+    this.enemies.create(900, 70, 'enemy').setScale(0.5);
+    this.enemies.create(950, 280, 'enemy').setScale(0.5);
+    this.enemies.create(810, 440, 'enemy').setScale(0.5).flipY = true;
 
-    
-
-    this.physics.add.overlap(this.player, this.enemies, this.gameOut, null, this);
-    this.physics.add.overlap(this.player, this.warmhole2, this.nextLevel, null, this);
-
-    this.Text = this.add.text(250, 20, "You are out", {
-          font: "35px Arial",
-          fill: "white"
-        });
-
-    this.Text1 = this.add.text(250, 20, "Level completed Scene load", {
-          font: "35px Arial",
-          fill: "white"
-        });
-    this.Text1.visible = false;
-    
-    this.Text.visible = false;
     this.player.alpha = 0.3;
     this.player.body.enable = false;
 
@@ -84,6 +71,44 @@ class Level extends Phaser.Scene{
       },
       callbackScope: this,
     });
+
+    this.physics.add.overlap(this.player, this.enemies, this.gameOut, null, this);
+    this.physics.add.overlap(this.player, this.warmhole2, this.nextLevel, null, this);
+
+    pauseBtn=this.add.image(1230,50,"pause").setScale(0.7).setInteractive();
+    pauseBtn.on('pointerdown',this.onPause);
+
+    inGameMenuBg=this.add.image(640,360,"inGameMenu").setScale(1.3);
+    inGameMenuBg.visible=false;
+    reloadBtn=this.add.image(750,360,"reload").setScale(0.9).setInteractive();
+    reloadBtn.on('pointerdown',this.onReload);
+    reloadBtn.visible=false;
+    playBtn=this.add.image(500,360,"play").setScale(0.9).setInteractive();
+    playBtn.on('pointerdown',this.onPlay);
+    playBtn.visible=false;
+
+  }
+
+  onPause(){
+    inGameMenuBg.visible=true;
+    reloadBtn.visible=true;
+    playBtn.visible=true;
+    pauseBtn.visible=false;
+    game.scene.pause("Level"+lvl);
+  }
+  onPlay(){
+    inGameMenuBg.visible=false;
+    reloadBtn.visible=false;
+    playBtn.visible=false;
+    pauseBtn.visible=true;
+    game.scene.resume("Level"+lvl);
+  }
+  onReload(){
+    inGameMenuBg.visible=false;
+    reloadBtn.visible=false;
+    playBtn.visible=false;
+    pauseBtn.visible=true;
+    game.scene.start("Level1");
   }
 
   update(){
@@ -94,18 +119,18 @@ class Level extends Phaser.Scene{
     enemy.play('attack',true);
     this.player.body.enable = false;
     this.player.visible = false;
-    this.Text.visible = true;
-    
+
+    this.scene.restart();
   }
 
   nextLevel(player,warmhole){
-    this.Text1.visible = true;
     this.player.body.enable = false;
     this.player.visible = false;
+    this.scene.switch('Level2');
   }
 
   onBoundOut(){
-    game.scene.start('Level');
+    game.scene.start('Level1');
   }
 
   PlayerPhysics(){

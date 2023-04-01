@@ -4,6 +4,7 @@ class Load extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image("startScreen", "Assets/start_Screen.png");
         this.load.image("background", "Assets/Background.png");
         this.load.image("block1", "Assets/Block.png");
         this.load.image("block2", "Assets/Block_stretched.png");
@@ -17,11 +18,11 @@ class Load extends Phaser.Scene{
         });
         this.load.image("warmhole", "Assets/Warm_Hole.png");
 
-        this.load.image("menu", "Assets/UI/Menu.png");
-        this.load.image("play", "Assets/UI/Pause.png");
-        this.load.image("pause", "Assets/UI/Play.png");
-        this.load.image("reload", "Assets/UI/reload.png");
-
+        this.load.image("play","Assets/UI/Play.png");
+        this.load.image("pause","Assets/UI/Pause.png");
+        this.load.image("reload","Assets/UI/reload.png");
+        this.load.image("inGameMenu","Assets/UI/In_Game_Menu.png");
+        this.load.image("uiButtons","Assets/UI/UI_Buttons.png");
 
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
@@ -118,8 +119,8 @@ class Load extends Phaser.Scene{
     }
 
     update(time){
-       if(time > 5000){
-            this.scene.switch("Level");
+       if(time > 2500){
+            this.scene.switch("StartScreen");
         }
     }
 }
